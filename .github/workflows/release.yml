@@ -1,0 +1,25 @@
+name: Release
+
+# on:
+  # push:
+  #   branches: [master]
+  # schedule:
+  #   - cron: "0 * * * *"
+
+jobs:
+  release:
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 17
+      - run: yarn install
+      - run: yarn download
+      - run: yarn release
+      - name: git push
+        run: |
+        git config --global user.name "Tyler Liu"
+        git config --global user.email tyler4long@gmail.com
+        git add docs
+        git commit -m "Release"
+        git push
