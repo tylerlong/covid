@@ -1,8 +1,8 @@
 name: Release
 
-# on:
-  # push:
-  #   branches: [master]
+on:
+  pull_request:
+    branches: [main]
   # schedule:
   #   - cron: "0 * * * *"
 
