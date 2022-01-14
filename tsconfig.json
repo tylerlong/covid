@@ -3,8 +3,11 @@
   "compilerOptions": {
     "outDir": "build",
     "esModuleInterop": true,
+    "jsx": "react",
+    "lib": ["DOM"],
   },
   "include": [
     "src/**/*.ts",
+    "src/**/*.tsx",
   ],
 }
