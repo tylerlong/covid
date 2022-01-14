@@ -2,11 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Component} from '@tylerlong/use-proxy/build/react';
 import Chart, {ChartConfiguration, ChartItem} from 'chart.js/auto';
-import * as _ from 'lodash';
 
 import './index.css';
 import store, {Store} from './store';
-import confirmedData from './data';
+import {getLabels, getData} from './utils';
 
 class App extends Component<{store: Store}> {
   render() {
@@ -18,7 +17,7 @@ class App extends Component<{store: Store}> {
     );
   }
   componentDidMount() {
-    const labels = confirmedData[0].slice(11);
+    const labels = getLabels();
 
     const data = {
       labels: labels,
@@ -27,10 +26,7 @@ class App extends Component<{store: Store}> {
           label: 'COVID-19 Cases in United States',
           backgroundColor: 'rgb(255, 99, 132)',
           borderColor: 'rgb(255, 99, 132)',
-          data: _.map(
-            _.unzip(confirmedData.slice(1).map(item => item.slice(11))),
-            _.sum
-          ),
+          data: getData(),
         },
       ],
     };
