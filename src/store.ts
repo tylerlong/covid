@@ -28,10 +28,10 @@ export class Store {
         ...config.data,
         datasets: [
           {
-            label: 'COVID-19 Cases in United States',
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
+            label: 'COVID-19 cases in United States',
             data: getData('confirmed_US', this.startDate, this.endDate),
+            backgroundColor: 'rgb(255, 99, 132, 0.5)',
+            borderColor: 'rgb(255, 99, 132, 0.5)',
           },
         ],
       },
@@ -47,8 +47,10 @@ export class Store {
         ...config.data,
         datasets: [
           {
-            label: 'COVID-19 Deaths in United States',
+            label: 'COVID-19 deaths in United States',
             data: getData('deaths_US', this.startDate, this.endDate),
+            backgroundColor: 'rgb(0, 0, 0, 0.2)',
+            borderColor: 'rgb(0, 0, 0, 0.2)',
           },
         ],
       },

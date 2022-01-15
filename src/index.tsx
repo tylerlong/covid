@@ -33,9 +33,14 @@ class App extends Component<{store: Store}> {
             }}
           />
           <Divider />
-          <canvas id="confirmedChart"></canvas>
-          <Divider />
-          <canvas id="deathsChart"></canvas>
+          <Row gutter={{xxl: 32}}>
+            <Col xs={24} xxl={12}>
+              <canvas id="confirmedChart"></canvas>
+            </Col>
+            <Col xs={24} xxl={12}>
+              <canvas id="deathsChart"></canvas>
+            </Col>
+          </Row>
         </Col>
       </Row>
     );
