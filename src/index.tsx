@@ -2,43 +2,58 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Component} from '@tylerlong/use-proxy/build/react';
 import Chart, {ChartConfiguration, ChartItem} from 'chart.js/auto';
+import {DatePicker} from 'antd';
+import moment from 'moment';
 
 import './index.css';
 import store, {Store} from './store';
-import {getLabels, getData} from './utils';
+import {getLabels, getData, getDateRange} from './utils';
+
+const dateFormat = 'M/D/YYYY';
+
+const {start, end} = getDateRange();
 
 class App extends Component<{store: Store}> {
+  private chart!: Chart;
+
   render() {
     return (
       <>
         <h1>COVID-19</h1>
+        <DatePicker.RangePicker
+          disabledDate={d => !d || d.isAfter(end) || d.isBefore(start)}
+          defaultValue={[moment(start, dateFormat), moment(end, dateFormat)]}
+          format={dateFormat}
+          onChange={val => {
+            console.log(val);
+          }}
+        />
         <canvas id="myChart"></canvas>
       </>
     );
   }
   componentDidMount() {
-    const labels = getLabels();
-
-    const data = {
-      labels: labels,
-      datasets: [
-        {
-          label: 'COVID-19 Cases in United States',
-          backgroundColor: 'rgb(255, 99, 132)',
-          borderColor: 'rgb(255, 99, 132)',
-          data: getData(),
-        },
-      ],
-    };
-
     const config: ChartConfiguration = {
       type: 'line',
-      data: data,
-      options: {},
+      data: {
+        labels: getLabels(),
+        datasets: [
+          {
+            label: 'COVID-19 Cases in United States',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: getData(),
+          },
+        ],
+      },
     };
-    new Chart(document.getElementById('myChart') as ChartItem, config);
+    this.chart = new Chart(
+      document.getElementById('myChart') as ChartItem,
+      config
+    );
   }
 }
+
 const container = document.createElement('div');
 document.body.appendChild(container);
 ReactDOM.render(<App store={store} />, container);
