@@ -2,7 +2,7 @@
   "license": "MIT",
   "scripts": {
     "serve": "webpack serve",
-    "release": "webpack --mode production",
+    "release": "node --max_old_space_size=8192 ./node_modules/webpack/bin/webpack.js --mode production",
     "download": "ts-node src/download.ts"
   },
   "dependencies": {
