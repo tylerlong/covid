@@ -1,31 +1,34 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Component} from '@tylerlong/use-proxy/build/react';
-import Chart, {ChartConfiguration, ChartItem} from 'chart.js/auto';
 import {DatePicker} from 'antd';
 import moment from 'moment';
 
 import './index.css';
 import store, {Store} from './store';
-import {getLabels, getData, getDateRange} from './utils';
-
-const dateFormat = 'M/D/YYYY';
-
-const {start, end} = getDateRange();
+import {minDate, maxDate, dateFormat} from './utils';
 
 class App extends Component<{store: Store}> {
-  private chart!: Chart;
-
   render() {
+    const {store} = this.props;
     return (
       <>
         <h1>COVID-19</h1>
         <DatePicker.RangePicker
-          disabledDate={d => !d || d.isAfter(end) || d.isBefore(start)}
-          defaultValue={[moment(start, dateFormat), moment(end, dateFormat)]}
+          disabledDate={d =>
+            !d ||
+            d.isAfter(moment(maxDate, dateFormat)) ||
+            d.isBefore(moment(minDate, dateFormat))
+          }
+          defaultValue={[
+            moment(store.startDate, dateFormat),
+            moment(store.endDate, dateFormat),
+          ]}
           format={dateFormat}
-          onChange={val => {
-            console.log(val);
+          onChange={(dates, dateStrings) => {
+            store.startDate = dateStrings[0];
+            store.endDate = dateStrings[1];
+            store.updateChart();
           }}
         />
         <canvas id="myChart"></canvas>
@@ -33,24 +36,7 @@ class App extends Component<{store: Store}> {
     );
   }
   componentDidMount() {
-    const config: ChartConfiguration = {
-      type: 'line',
-      data: {
-        labels: getLabels(),
-        datasets: [
-          {
-            label: 'COVID-19 Cases in United States',
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
-            data: getData(),
-          },
-        ],
-      },
-    };
-    this.chart = new Chart(
-      document.getElementById('myChart') as ChartItem,
-      config
-    );
+    store.initChart();
   }
 }
 
