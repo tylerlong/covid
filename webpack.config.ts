@@ -6,7 +6,6 @@ import transformerFactory from 'ts-import-plugin';
 
 const config: Configuration = {
   mode: 'development',
-  devtool: 'source-map',
   entry: {
     index: './src/index.tsx',
   },
