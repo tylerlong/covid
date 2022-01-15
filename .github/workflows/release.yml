@@ -20,5 +20,5 @@ jobs:
           git config --global user.name "Tyler Liu"
           git config --global user.email tyler4long@gmail.com
           git add docs
-          git commit -m "Release"
+          git commit -m "Release" || echo "No changes to commit"
           git push
