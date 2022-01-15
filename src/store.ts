@@ -3,7 +3,8 @@ import Chart, {ChartConfiguration, ChartItem} from 'chart.js/auto';
 
 import {getData, minDate, maxDate, getLabels} from './utils';
 
-let chart: Chart;
+let confirmedChart: Chart;
+let deathsChart: Chart;
 
 export class Store {
   country?: string;
@@ -13,7 +14,7 @@ export class Store {
   endDate = maxDate;
 
   initChart() {
-    const config: ChartConfiguration = {
+    const confimredConfig: ChartConfiguration = {
       type: 'line',
       data: {
         labels: getLabels(),
@@ -22,18 +23,40 @@ export class Store {
             label: 'COVID-19 Cases in United States',
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgb(255, 99, 132)',
-            data: getData(),
+            data: getData('confirmed_US'),
           },
         ],
       },
     };
-    chart = new Chart(document.getElementById('myChart') as ChartItem, config);
+    const deathsConfig: ChartConfiguration = {
+      type: 'line',
+      data: {
+        labels: getLabels(),
+        datasets: [
+          {
+            label: 'COVID-19 Deaths in United States',
+            data: getData('deaths_US'),
+          },
+        ],
+      },
+    };
+    confirmedChart = new Chart(
+      document.getElementById('confirmedChart') as ChartItem,
+      confimredConfig
+    );
+    deathsChart = new Chart(
+      document.getElementById('deathsChart') as ChartItem,
+      deathsConfig
+    );
   }
 
   updateChart() {
-    chart.data.labels = [];
-    chart.data.datasets[0].data = [];
-    chart.update();
+    confirmedChart.data.labels = [];
+    confirmedChart.data.datasets[0].data = [];
+    confirmedChart.update();
+    deathsChart.data.labels = [];
+    deathsChart.data.datasets[0].data = [];
+    deathsChart.update();
   }
 }
 

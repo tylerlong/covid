@@ -31,7 +31,8 @@ class App extends Component<{store: Store}> {
             store.updateChart();
           }}
         />
-        <canvas id="myChart"></canvas>
+        <canvas id="confirmedChart"></canvas>
+        <canvas id="deathsChart"></canvas>
       </>
     );
   }

@@ -1,3 +1,5 @@
 build/
 node_modules/
-data.ts
+
+src/data/*
+!src/data/.gitkeep
