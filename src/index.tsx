@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Component} from '@tylerlong/use-proxy/build/react';
-import {DatePicker} from 'antd';
+import {DatePicker, Divider} from 'antd';
 import moment from 'moment';
 
 import './index.css';
@@ -31,7 +31,9 @@ class App extends Component<{store: Store}> {
             store.updateChart();
           }}
         />
+        <Divider />
         <canvas id="confirmedChart"></canvas>
+        <Divider />
         <canvas id="deathsChart"></canvas>
       </>
     );

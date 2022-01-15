@@ -14,28 +14,24 @@ export class Store {
   endDate = maxDate;
 
   initChart() {
-    const confimredConfig: ChartConfiguration = {
+    const config: ChartConfiguration = {
       type: 'line',
       data: {
-        labels: getLabels(),
+        labels: getLabels(this.startDate, this.endDate),
+        datasets: [],
+      },
+    };
+
+    const confimredConfig: ChartConfiguration = {
+      ...config,
+      data: {
+        ...config.data,
         datasets: [
           {
             label: 'COVID-19 Cases in United States',
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgb(255, 99, 132)',
-            data: getData('confirmed_US'),
-          },
-        ],
-      },
-    };
-    const deathsConfig: ChartConfiguration = {
-      type: 'line',
-      data: {
-        labels: getLabels(),
-        datasets: [
-          {
-            label: 'COVID-19 Deaths in United States',
-            data: getData('deaths_US'),
+            data: getData('confirmed_US', this.startDate, this.endDate),
           },
         ],
       },
@@ -44,6 +40,19 @@ export class Store {
       document.getElementById('confirmedChart') as ChartItem,
       confimredConfig
     );
+
+    const deathsConfig: ChartConfiguration = {
+      ...config,
+      data: {
+        ...config.data,
+        datasets: [
+          {
+            label: 'COVID-19 Deaths in United States',
+            data: getData('deaths_US', this.startDate, this.endDate),
+          },
+        ],
+      },
+    };
     deathsChart = new Chart(
       document.getElementById('deathsChart') as ChartItem,
       deathsConfig
@@ -51,11 +60,21 @@ export class Store {
   }
 
   updateChart() {
-    confirmedChart.data.labels = [];
-    confirmedChart.data.datasets[0].data = [];
+    deathsChart.data.labels = confirmedChart.data.labels = getLabels(
+      this.startDate,
+      this.endDate
+    );
+    confirmedChart.data.datasets[0].data = getData(
+      'confirmed_US',
+      this.startDate,
+      this.endDate
+    );
     confirmedChart.update();
-    deathsChart.data.labels = [];
-    deathsChart.data.datasets[0].data = [];
+    deathsChart.data.datasets[0].data = getData(
+      'deaths_US',
+      this.startDate,
+      this.endDate
+    );
     deathsChart.update();
   }
 }
