@@ -135,8 +135,8 @@ export class Store {
 
   syncToQueryParams() {
     setQueryParams([
-      {key: 'state', value: this.state},
       {key: 'range', value: this.range.toString()},
+      {key: 'state', value: this.state},
     ]);
   }
 }
