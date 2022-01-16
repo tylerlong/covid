@@ -8,6 +8,19 @@ export const minDate = header[11] as string;
 export const maxDate = _.last(header) as string;
 export const dateFormat = 'M/D/YY';
 
+export const states = [...new Set(confirmed.slice(1).map(row => row[6]))];
+export const counties: {[state: string]: string[]} = {};
+for (const row of confirmed.slice(1)) {
+  const state = row[6];
+  const county = row[5] as string;
+  if (!counties[state]) {
+    counties[state] = [];
+  }
+  if (county != null) {
+    counties[state].push(county);
+  }
+}
+
 export const getLabels = (startDate: string, endDate: string): string[] => {
   const startIndex = header.indexOf(startDate);
   const endIndex = header.indexOf(endDate);
