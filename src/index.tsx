@@ -13,7 +13,7 @@ class App extends Component<{store: Store}> {
     const {store} = this.props;
     return (
       <Row>
-        <Col offset={2} span={20}>
+        <Col offset={1} span={22}>
           <h1>COVID-19</h1>
           <Space>
             <DatePicker.RangePicker
