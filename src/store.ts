@@ -8,7 +8,7 @@ import {
   maxDate,
   getLabels,
   dateFormat,
-  setQueryParam,
+  setQueryParams,
 } from './utils';
 
 let confirmedChart: Chart;
@@ -109,13 +109,13 @@ export class Store {
   selectState(state: string) {
     this.state = state;
     this.updateChart();
-    setQueryParam('state', state);
+    this.syncToQueryParams();
   }
 
   selectrange(range: number) {
     this.range = range;
     this.updateChart();
-    setQueryParam('range', range.toString());
+    this.syncToQueryParams();
   }
 
   applyQueryParams() {
@@ -131,6 +131,13 @@ export class Store {
       this.range = parseInt(range);
     }
     this.updateChart();
+  }
+
+  syncToQueryParams() {
+    setQueryParams([
+      {key: 'state', value: this.state},
+      {key: 'range', value: this.range.toString()},
+    ]);
   }
 }
 

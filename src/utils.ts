@@ -64,8 +64,10 @@ export const getData = (options: {
   }
 };
 
-export const setQueryParam = (key: string, value: string) => {
+export const setQueryParams = (qps: {key: string; value: string}[]) => {
   const queryParams = new URLSearchParams(window.location.search);
-  queryParams.set(key, value);
+  for (const qp of qps) {
+    queryParams.set(qp.key, qp.value);
+  }
   history.pushState(null, '', '?' + queryParams.toString());
 };

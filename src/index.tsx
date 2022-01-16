@@ -57,6 +57,7 @@ class App extends Component<{store: Store}> {
   componentDidMount() {
     store.initChart();
     store.applyQueryParams();
+    store.syncToQueryParams();
   }
 }
 
