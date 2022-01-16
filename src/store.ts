@@ -62,7 +62,7 @@ export class Store {
   }
 
   updateChart() {
-    deathsChart.data.labels = confirmedChart.data.labels = getLabels({
+    confirmedChart.data.labels = deathsChart.data.labels = getLabels({
       startDate: this.startDate,
       endDate: this.endDate,
     });
@@ -84,7 +84,7 @@ export class Store {
       endDate: this.endDate,
       state: this.selectedState,
     });
-    if (this.selectedState !== 'All') {
+    if (this.selectedState === 'All') {
       deathsChart.data.datasets[0].label = 'COVID-19 deaths in United States';
     } else {
       deathsChart.data.datasets[0].label = `COVID-19 deaths in ${this.selectedState}, United States`;
