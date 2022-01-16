@@ -16,19 +16,18 @@ class App extends Component<{store: Store}> {
         <Col offset={1} span={22}>
           <h1>COVID-19</h1>
           <Space>
-            <DatePicker
-              disabledDate={d =>
-                !d ||
-                d.isAfter(moment(maxDate, dateFormat)) ||
-                d.isBefore(moment(minDate, dateFormat))
-              }
-              defaultValue={moment(store.startDate, dateFormat)}
-              format={dateFormat}
-              onChange={(date, dateString) => {
-                store.startDate = dateString;
-                store.updateChart();
-              }}
-            />
+            <Select
+              style={{width: 192}}
+              defaultValue={30}
+              onChange={dateRange => store.selectDateRange(dateRange)}
+            >
+              <Select.Option value={7}>Last 7 days</Select.Option>
+              <Select.Option value={30}>Last 30 days</Select.Option>
+              <Select.Option value={90}>Last 90 days</Select.Option>
+              <Select.Option value={180}>Last 180 days</Select.Option>
+              <Select.Option value={365}>Last 365 days</Select.Option>
+              <Select.Option value={-1}>All time</Select.Option>
+            </Select>
             <Select
               style={{width: 192}}
               placeholder="State"

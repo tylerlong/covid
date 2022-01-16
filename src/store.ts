@@ -1,15 +1,27 @@
 import {useProxy} from '@tylerlong/use-proxy';
 import Chart, {ChartConfiguration, ChartItem} from 'chart.js/auto';
+import moment from 'moment';
 
-import {getData, minDate, maxDate, getLabels} from './utils';
+import {getData, minDate, maxDate, getLabels, dateFormat} from './utils';
 
 let confirmedChart: Chart;
 let deathsChart: Chart;
 
 export class Store {
-  country?: string;
-  county?: string;
-  startDate = minDate;
+  dateRange = 30;
+  get startDate() {
+    switch (this.dateRange) {
+      case -1: {
+        return minDate;
+      }
+      default: {
+        return moment(maxDate, dateFormat)
+          .add(-this.dateRange, 'days')
+          .format(dateFormat);
+      }
+    }
+  }
+
   state = 'All';
 
   initChart() {
@@ -89,6 +101,11 @@ export class Store {
 
   selectState(state: string) {
     this.state = state;
+    this.updateChart();
+  }
+
+  selectDateRange(dateRange: number) {
+    this.dateRange = dateRange;
     this.updateChart();
   }
 }
