@@ -1,3 +1,4 @@
+/* eslint-disable node/no-unpublished-import */
 import _ from 'lodash';
 
 import confirmed from './data/confirmed_US';
@@ -16,7 +17,7 @@ for (const row of confirmed.slice(1)) {
   if (!counties[state]) {
     counties[state] = [];
   }
-  if (county != null) {
+  if (county !== null) {
     counties[state].push(county);
   }
 }
@@ -61,4 +62,10 @@ export const getData = (options: {
       return [];
     }
   }
+};
+
+export const setQueryParam = (key: string, value: string) => {
+  const queryParams = new URLSearchParams(window.location.search);
+  queryParams.set(key, value);
+  history.pushState(null, '', '?' + queryParams.toString());
 };

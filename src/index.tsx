@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Component} from '@tylerlong/use-proxy/build/react';
-import {Col, DatePicker, Divider, Row, Select, Space} from 'antd';
-import moment from 'moment';
+import {Col, Divider, Row, Select, Space} from 'antd';
 
 import './index.css';
 import store, {Store} from './store';
-import {minDate, maxDate, dateFormat, states, counties} from './utils';
+import {states} from './utils';
 
 class App extends Component<{store: Store}> {
   render() {
@@ -18,8 +17,8 @@ class App extends Component<{store: Store}> {
           <Space>
             <Select
               style={{width: 192}}
-              defaultValue={30}
-              onChange={dateRange => store.selectDateRange(dateRange)}
+              value={store.range}
+              onChange={range => store.selectrange(range)}
             >
               <Select.Option value={7}>Last 7 days</Select.Option>
               <Select.Option value={30}>Last 30 days</Select.Option>
@@ -31,7 +30,7 @@ class App extends Component<{store: Store}> {
             <Select
               style={{width: 192}}
               placeholder="State"
-              defaultValue="All"
+              value={store.state}
               onChange={state => store.selectState(state)}
             >
               <Select.Option value="All">All</Select.Option>
@@ -57,6 +56,7 @@ class App extends Component<{store: Store}> {
   }
   componentDidMount() {
     store.initChart();
+    store.applyQueryParams();
   }
 }
 

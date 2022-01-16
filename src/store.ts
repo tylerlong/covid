@@ -2,21 +2,28 @@ import {useProxy} from '@tylerlong/use-proxy';
 import Chart, {ChartConfiguration, ChartItem} from 'chart.js/auto';
 import moment from 'moment';
 
-import {getData, minDate, maxDate, getLabels, dateFormat} from './utils';
+import {
+  getData,
+  minDate,
+  maxDate,
+  getLabels,
+  dateFormat,
+  setQueryParam,
+} from './utils';
 
 let confirmedChart: Chart;
 let deathsChart: Chart;
 
 export class Store {
-  dateRange = 30;
+  range = 30;
   get startDate() {
-    switch (this.dateRange) {
+    switch (this.range) {
       case -1: {
         return minDate;
       }
       default: {
         return moment(maxDate, dateFormat)
-          .add(-this.dateRange, 'days')
+          .add(-this.range, 'days')
           .format(dateFormat);
       }
     }
@@ -102,14 +109,35 @@ export class Store {
   selectState(state: string) {
     this.state = state;
     this.updateChart();
+    setQueryParam('state', state);
   }
 
-  selectDateRange(dateRange: number) {
-    this.dateRange = dateRange;
+  selectrange(range: number) {
+    this.range = range;
+    this.updateChart();
+    setQueryParam('range', range.toString());
+  }
+
+  applyQueryParams() {
+    const urlSearchParams = new URLSearchParams(
+      new URL(window.location.href).search
+    );
+    const state = urlSearchParams.get('state');
+    if (state !== null) {
+      this.state = state;
+    }
+    const range = urlSearchParams.get('range');
+    if (range !== null) {
+      this.range = parseInt(range);
+    }
     this.updateChart();
   }
 }
 
 const store = useProxy(new Store());
+window.addEventListener('popstate', event => {
+  // go back/forward in browser
+  store.applyQueryParams();
+});
 
 export default store;
