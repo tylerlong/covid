@@ -29,7 +29,6 @@ export class Store {
         ...config.data,
         datasets: [
           {
-            label: 'COVID-19 cases in United States',
             data: [],
             backgroundColor: 'rgb(255, 99, 132, 0.5)',
             borderColor: 'rgb(255, 99, 132, 0.5)',
@@ -48,7 +47,6 @@ export class Store {
         ...config.data,
         datasets: [
           {
-            label: 'COVID-19 deaths in United States',
             data: [],
             backgroundColor: 'rgb(0, 0, 0, 0.2)',
             borderColor: 'rgb(0, 0, 0, 0.2)',
@@ -74,7 +72,9 @@ export class Store {
       endDate: this.endDate,
       state: this.selectedState,
     });
-    if (this.selectedState !== 'All') {
+    if (this.selectedState === 'All') {
+      confirmedChart.data.datasets[0].label = 'COVID-19 cases in United States';
+    } else {
       confirmedChart.data.datasets[0].label = `COVID-19 cases in ${this.selectedState}, United States`;
     }
     confirmedChart.update();
@@ -85,6 +85,8 @@ export class Store {
       state: this.selectedState,
     });
     if (this.selectedState !== 'All') {
+      deathsChart.data.datasets[0].label = 'COVID-19 deaths in United States';
+    } else {
       deathsChart.data.datasets[0].label = `COVID-19 deaths in ${this.selectedState}, United States`;
     }
     deathsChart.update();
