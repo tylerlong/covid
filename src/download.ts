@@ -9,7 +9,7 @@ const download = async (type: 'confirmed_US' | 'deaths_US') => {
     `https://github.com/CSSEGISandData/COVID-19/raw/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_${type}.csv`,
     {responseType: 'arraybuffer'}
   );
-  const p = Papa.parse(r.data.toString(), {dynamicTyping: true});
+  const p = Papa.parse(r.data.toString().trim(), {dynamicTyping: true});
   const data = `const data: (string|number)[][] = ${JSON.stringify(p.data)};
 
 export default data;`;
