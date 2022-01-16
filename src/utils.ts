@@ -21,25 +21,33 @@ for (const row of confirmed.slice(1)) {
   }
 }
 
-export const getLabels = (startDate: string, endDate: string): string[] => {
+export const getLabels = (options: {
+  startDate: string;
+  endDate: string;
+}): string[] => {
+  const {startDate, endDate} = options;
   const startIndex = header.indexOf(startDate);
   const endIndex = header.indexOf(endDate);
   return header.slice(startIndex, endIndex + 1) as string[];
 };
 
-export const getData = (
-  type: 'confirmed_US' | 'deaths_US',
-  startDate: string,
-  endDate: string
-): number[] => {
+export const getData = (options: {
+  type: 'confirmed_US' | 'deaths_US';
+  startDate: string;
+  endDate: string;
+  state: string;
+}): number[] => {
+  const {type, startDate, endDate, state} = options;
   switch (type) {
     case 'confirmed_US': {
       const startIndex = header.indexOf(startDate);
       const endIndex = header.indexOf(endDate);
+      let filteredData = confirmed.slice(1);
+      if (state !== 'All') {
+        filteredData = filteredData.filter(row => row[6] === state);
+      }
       return _.map(
-        _.unzip(
-          confirmed.slice(1).map(item => item.slice(startIndex, endIndex + 1))
-        ),
+        _.unzip(filteredData.map(item => item.slice(startIndex, endIndex + 1))),
         _.sum
       );
     }
@@ -47,10 +55,12 @@ export const getData = (
       const header = deaths[0];
       const startIndex = header.indexOf(startDate);
       const endIndex = header.indexOf(endDate);
+      let filteredData = deaths.slice(1);
+      if (state !== 'All') {
+        filteredData = filteredData.filter(row => row[6] === state);
+      }
       return _.map(
-        _.unzip(
-          deaths.slice(1).map(item => item.slice(startIndex, endIndex + 1))
-        ),
+        _.unzip(filteredData.map(item => item.slice(startIndex, endIndex + 1))),
         _.sum
       );
     }

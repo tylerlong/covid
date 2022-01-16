@@ -12,12 +12,13 @@ export class Store {
   county?: string;
   startDate = minDate;
   endDate = maxDate;
+  selectedState = 'All';
 
   initChart() {
     const config: ChartConfiguration = {
       type: 'line',
       data: {
-        labels: getLabels(this.startDate, this.endDate),
+        labels: [],
         datasets: [],
       },
     };
@@ -29,7 +30,7 @@ export class Store {
         datasets: [
           {
             label: 'COVID-19 cases in United States',
-            data: getData('confirmed_US', this.startDate, this.endDate),
+            data: [],
             backgroundColor: 'rgb(255, 99, 132, 0.5)',
             borderColor: 'rgb(255, 99, 132, 0.5)',
           },
@@ -48,7 +49,7 @@ export class Store {
         datasets: [
           {
             label: 'COVID-19 deaths in United States',
-            data: getData('deaths_US', this.startDate, this.endDate),
+            data: [],
             backgroundColor: 'rgb(0, 0, 0, 0.2)',
             borderColor: 'rgb(0, 0, 0, 0.2)',
           },
@@ -59,25 +60,33 @@ export class Store {
       document.getElementById('deathsChart') as ChartItem,
       deathsConfig
     );
+    this.updateChart();
   }
 
   updateChart() {
-    deathsChart.data.labels = confirmedChart.data.labels = getLabels(
-      this.startDate,
-      this.endDate
-    );
-    confirmedChart.data.datasets[0].data = getData(
-      'confirmed_US',
-      this.startDate,
-      this.endDate
-    );
+    deathsChart.data.labels = confirmedChart.data.labels = getLabels({
+      startDate: this.startDate,
+      endDate: this.endDate,
+    });
+    confirmedChart.data.datasets[0].data = getData({
+      type: 'confirmed_US',
+      startDate: this.startDate,
+      endDate: this.endDate,
+      state: this.selectedState,
+    });
     confirmedChart.update();
-    deathsChart.data.datasets[0].data = getData(
-      'deaths_US',
-      this.startDate,
-      this.endDate
-    );
+    deathsChart.data.datasets[0].data = getData({
+      type: 'deaths_US',
+      startDate: this.startDate,
+      endDate: this.endDate,
+      state: this.selectedState,
+    });
     deathsChart.update();
+  }
+
+  selectState(state: string) {
+    this.selectedState = state;
+    this.updateChart();
   }
 }
 

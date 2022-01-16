@@ -33,7 +33,12 @@ class App extends Component<{store: Store}> {
                 store.updateChart();
               }}
             />
-            <Select style={{width: 256}} placeholder="State" defaultValue="All">
+            <Select
+              style={{width: 256}}
+              placeholder="State"
+              defaultValue="All"
+              onChange={state => store.selectState(state)}
+            >
               <Select.Option value="All">All</Select.Option>
               {states.map(state => (
                 <Select.Option value={state} key={state}>
