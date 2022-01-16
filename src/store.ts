@@ -8,11 +8,10 @@ let deathsChart: Chart;
 
 export class Store {
   country?: string;
-  state?: string;
   county?: string;
   startDate = minDate;
   endDate = maxDate;
-  selectedState = 'All';
+  state = 'All';
 
   initChart() {
     const config: ChartConfiguration = {
@@ -70,30 +69,30 @@ export class Store {
       type: 'confirmed_US',
       startDate: this.startDate,
       endDate: this.endDate,
-      state: this.selectedState,
+      state: this.state,
     });
-    if (this.selectedState === 'All') {
+    if (this.state === 'All') {
       confirmedChart.data.datasets[0].label = 'COVID-19 cases in United States';
     } else {
-      confirmedChart.data.datasets[0].label = `COVID-19 cases in ${this.selectedState}, United States`;
+      confirmedChart.data.datasets[0].label = `COVID-19 cases in ${this.state}, United States`;
     }
     confirmedChart.update();
     deathsChart.data.datasets[0].data = getData({
       type: 'deaths_US',
       startDate: this.startDate,
       endDate: this.endDate,
-      state: this.selectedState,
+      state: this.state,
     });
-    if (this.selectedState === 'All') {
+    if (this.state === 'All') {
       deathsChart.data.datasets[0].label = 'COVID-19 deaths in United States';
     } else {
-      deathsChart.data.datasets[0].label = `COVID-19 deaths in ${this.selectedState}, United States`;
+      deathsChart.data.datasets[0].label = `COVID-19 deaths in ${this.state}, United States`;
     }
     deathsChart.update();
   }
 
   selectState(state: string) {
-    this.selectedState = state;
+    this.state = state;
     this.updateChart();
   }
 }

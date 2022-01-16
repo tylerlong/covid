@@ -11,7 +11,7 @@ export const dateFormat = 'M/D/YY';
 export const states = [...new Set(confirmed.slice(1).map(row => row[6]))];
 export const counties: {[state: string]: string[]} = {};
 for (const row of confirmed.slice(1)) {
-  const state = row[6];
+  const state = row[6] as string;
   const county = row[5] as string;
   if (!counties[state]) {
     counties[state] = [];

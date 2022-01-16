@@ -34,7 +34,7 @@ class App extends Component<{store: Store}> {
               }}
             />
             <Select
-              style={{width: 256}}
+              style={{width: 192}}
               placeholder="State"
               defaultValue="All"
               onChange={state => store.selectState(state)}
