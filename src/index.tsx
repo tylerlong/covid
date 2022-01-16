@@ -16,20 +16,16 @@ class App extends Component<{store: Store}> {
         <Col offset={1} span={22}>
           <h1>COVID-19</h1>
           <Space>
-            <DatePicker.RangePicker
+            <DatePicker
               disabledDate={d =>
                 !d ||
                 d.isAfter(moment(maxDate, dateFormat)) ||
                 d.isBefore(moment(minDate, dateFormat))
               }
-              defaultValue={[
-                moment(store.startDate, dateFormat),
-                moment(store.endDate, dateFormat),
-              ]}
+              defaultValue={moment(store.startDate, dateFormat)}
               format={dateFormat}
-              onChange={(dates, dateStrings) => {
-                store.startDate = dateStrings[0];
-                store.endDate = dateStrings[1];
+              onChange={(date, dateString) => {
+                store.startDate = dateString;
                 store.updateChart();
               }}
             />

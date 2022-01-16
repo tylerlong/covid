@@ -10,7 +10,6 @@ export class Store {
   country?: string;
   county?: string;
   startDate = minDate;
-  endDate = maxDate;
   state = 'All';
 
   initChart() {
@@ -63,12 +62,10 @@ export class Store {
   updateChart() {
     confirmedChart.data.labels = deathsChart.data.labels = getLabels({
       startDate: this.startDate,
-      endDate: this.endDate,
     });
     confirmedChart.data.datasets[0].data = getData({
       type: 'confirmed_US',
       startDate: this.startDate,
-      endDate: this.endDate,
       state: this.state,
     });
     if (this.state === 'All') {
@@ -80,7 +77,6 @@ export class Store {
     deathsChart.data.datasets[0].data = getData({
       type: 'deaths_US',
       startDate: this.startDate,
-      endDate: this.endDate,
       state: this.state,
     });
     if (this.state === 'All') {
