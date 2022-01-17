@@ -31,6 +31,7 @@ class App extends Component<{store: Store}> {
               style={{width: 192}}
               value={store.country}
               onChange={country => store.selectCountry(country)}
+              showSearch
             >
               <Select.Option value="All">Worldwide</Select.Option>
               {countries.map(country => (
@@ -44,6 +45,7 @@ class App extends Component<{store: Store}> {
                 style={{width: 192}}
                 value={store.state}
                 onChange={state => store.selectState(state)}
+                showSearch
               >
                 <Select.Option value="All">Countrywide</Select.Option>
                 {states[store.country].map(state => (
@@ -58,6 +60,7 @@ class App extends Component<{store: Store}> {
                 style={{width: 192}}
                 value={store.county}
                 onChange={county => store.selectCounty(county)}
+                showSearch
               >
                 <Select.Option value="All">Statewide</Select.Option>
                 {counties[store.state].map(county => (
@@ -83,6 +86,14 @@ class App extends Component<{store: Store}> {
               <canvas id="deaths-chart-2"></canvas>
             </Col>
           </Row>
+          <Divider />
+          <p>
+            Data is provided by{' '}
+            <a target="_blank" href="https://github.com/CSSEGISandData">
+              CSSE at Johns Hopkins University
+            </a>
+            .
+          </p>
         </Col>
       </Row>
     );
