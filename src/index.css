@@ -5,3 +5,7 @@ body {
 div.form > .ant-select {
   margin: 4px 8px 4px 0;
 }
+
+div.links {
+  float: right;
+}
