@@ -94,8 +94,8 @@ export const getData = (options: {
     filteredData = filteredData.filter(row => row[1] === country);
   }
   if (state !== 'All') {
-    filteredData = filteredData.filter(
-      row => row[6] === state || row[0] === state
+    filteredData = filteredData.filter(row =>
+      country === 'United States' ? row[6] === state : row[0] === state
     );
     if (county !== 'All') {
       filteredData = filteredData.filter(row => row[5] === county);
