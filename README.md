@@ -5,6 +5,5 @@ A website to allow people to browse COVID-19 data visually and easily.
 
 ## Todo
 
-- Filter by US county
 - Provide world wide data and filter by country
 - show daily delta data as bar chart

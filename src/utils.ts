@@ -32,36 +32,37 @@ export const getData = (options: {
   type: 'confirmed_US' | 'deaths_US';
   startDate: string;
   state: string;
+  county: string;
 }): number[] => {
-  const {type, startDate, state} = options;
+  const {type, startDate, state, county} = options;
+  let filteredData: (string | number | null)[][] = [];
+  let startIndex = 0;
   switch (type) {
     case 'confirmed_US': {
-      const startIndex = header.indexOf(startDate);
-      let filteredData = confirmed.slice(1);
-      if (state !== 'All') {
-        filteredData = filteredData.filter(row => row[6] === state);
-      }
-      return _.map(
-        _.unzip(filteredData.map(item => item.slice(startIndex))),
-        _.sum
-      );
+      startIndex = header.indexOf(startDate);
+      filteredData = confirmed.slice(1);
+      break;
     }
     case 'deaths_US': {
       const header = deaths[0];
-      const startIndex = header.indexOf(startDate);
-      let filteredData = deaths.slice(1);
-      if (state !== 'All') {
-        filteredData = filteredData.filter(row => row[6] === state);
-      }
-      return _.map(
-        _.unzip(filteredData.map(item => item.slice(startIndex))),
-        _.sum
-      );
+      startIndex = header.indexOf(startDate);
+      filteredData = deaths.slice(1);
+      break;
     }
     default: {
       return [];
     }
   }
+  if (state !== 'All') {
+    filteredData = filteredData.filter(row => row[6] === state);
+    if (county !== 'All') {
+      filteredData = filteredData.filter(row => row[5] === county);
+    }
+  }
+  return _.map(
+    _.unzip(filteredData.map(item => item.slice(startIndex))),
+    _.sum
+  );
 };
 
 export const setQueryParams = (qps: {key: string; value: string}[]) => {

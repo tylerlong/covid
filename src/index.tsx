@@ -5,7 +5,7 @@ import {Col, Divider, Row, Select, Space} from 'antd';
 
 import './index.css';
 import store, {Store} from './store';
-import {states} from './utils';
+import {counties, states} from './utils';
 
 class App extends Component<{store: Store}> {
   render() {
@@ -18,7 +18,7 @@ class App extends Component<{store: Store}> {
             <Select
               style={{width: 192}}
               value={store.range}
-              onChange={range => store.selectrange(range)}
+              onChange={range => store.selectRange(range)}
             >
               <Select.Option value={7}>Last 7 days</Select.Option>
               <Select.Option value={30}>Last 30 days</Select.Option>
@@ -29,7 +29,6 @@ class App extends Component<{store: Store}> {
             </Select>
             <Select
               style={{width: 192}}
-              placeholder="State"
               value={store.state}
               onChange={state => store.selectState(state)}
             >
@@ -40,6 +39,20 @@ class App extends Component<{store: Store}> {
                 </Select.Option>
               ))}
             </Select>
+            {(counties[store.state] ?? []).length > 0 ? (
+              <Select
+                style={{width: 192}}
+                value={store.county}
+                onChange={county => store.selectCounty(county)}
+              >
+                <Select.Option value="All">All</Select.Option>
+                {counties[store.state].map(county => (
+                  <Select.Option value={county} key={county}>
+                    {county}
+                  </Select.Option>
+                ))}
+              </Select>
+            ) : null}
           </Space>
           <Divider />
           <Row gutter={{xxl: 32}}>

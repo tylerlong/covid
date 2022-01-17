@@ -30,6 +30,7 @@ export class Store {
   }
 
   state = 'All';
+  county = 'All';
 
   initChart() {
     const config: ChartConfiguration = {
@@ -82,38 +83,46 @@ export class Store {
     confirmedChart.data.labels = deathsChart.data.labels = getLabels({
       startDate: this.startDate,
     });
+    let location = 'United States';
+    if (this.state !== 'All') {
+      location = `${this.state}, ${location}`;
+    }
+    if (this.county !== 'All') {
+      location = `${this.county}, ${location}`;
+    }
     confirmedChart.data.datasets[0].data = getData({
       type: 'confirmed_US',
       startDate: this.startDate,
       state: this.state,
+      county: this.county,
     });
-    if (this.state === 'All') {
-      confirmedChart.data.datasets[0].label = 'COVID-19 cases in United States';
-    } else {
-      confirmedChart.data.datasets[0].label = `COVID-19 cases in ${this.state}, United States`;
-    }
+    confirmedChart.data.datasets[0].label = `COVID-19 cases in ${location}`;
     confirmedChart.update();
     deathsChart.data.datasets[0].data = getData({
       type: 'deaths_US',
       startDate: this.startDate,
       state: this.state,
+      county: this.county,
     });
-    if (this.state === 'All') {
-      deathsChart.data.datasets[0].label = 'COVID-19 deaths in United States';
-    } else {
-      deathsChart.data.datasets[0].label = `COVID-19 deaths in ${this.state}, United States`;
-    }
+    deathsChart.data.datasets[0].label = `COVID-19 deaths in ${location}`;
     deathsChart.update();
   }
 
   selectState(state: string) {
     this.state = state;
+    this.county = 'All';
     this.updateChart();
     this.syncToQueryParams();
   }
 
-  selectrange(range: number) {
+  selectRange(range: number) {
     this.range = range;
+    this.updateChart();
+    this.syncToQueryParams();
+  }
+
+  selectCounty(county: string) {
+    this.county = county;
     this.updateChart();
     this.syncToQueryParams();
   }
@@ -122,22 +131,30 @@ export class Store {
     const urlSearchParams = new URLSearchParams(
       new URL(window.location.href).search
     );
+    const range = urlSearchParams.get('range');
+    if (range !== null) {
+      this.range = parseInt(range);
+    }
     const state = urlSearchParams.get('state');
     if (state !== null) {
       this.state = state;
     }
-    const range = urlSearchParams.get('range');
-    if (range !== null) {
-      this.range = parseInt(range);
+    const county = urlSearchParams.get('county');
+    if (county !== null) {
+      this.county = county;
     }
     this.updateChart();
   }
 
   syncToQueryParams() {
-    setQueryParams([
+    const queryParams = [
       {key: 'range', value: this.range.toString()},
       {key: 'state', value: this.state},
-    ]);
+    ];
+    if (this.state !== 'All') {
+      queryParams.push({key: 'county', value: this.county});
+    }
+    setQueryParams(queryParams);
   }
 }
 
