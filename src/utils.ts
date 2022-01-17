@@ -3,12 +3,21 @@ import _ from 'lodash';
 
 import confirmed from './data/confirmed_US';
 import deaths from './data/deaths_US';
+import _confirmedGlobal from './data/confirmed_global';
+import _deathsGlobal from './data/deaths_global';
+
+const confirmedGlobal = _confirmedGlobal.filter(item => item[1] !== 'US');
+const deathsGlobal = _deathsGlobal.filter(item => item[1] !== 'US');
 
 const header = confirmed[0];
 export const minDate = header[11] as string;
 export const maxDate = _.last(header) as string;
 export const dateFormat = 'M/D/YY';
 
+export const countries = [
+  ...new Set(confirmedGlobal.slice(1).map(row => row[1])),
+  'United States',
+].sort();
 export const states = [...new Set(confirmed.slice(1).map(row => row[6]))];
 export const counties: {[state: string]: string[]} = {};
 for (const row of confirmed.slice(1)) {

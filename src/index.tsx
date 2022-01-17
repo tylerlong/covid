@@ -5,7 +5,7 @@ import {Col, Divider, Row, Select, Space} from 'antd';
 
 import './index.css';
 import store, {Store} from './store';
-import {counties, states} from './utils';
+import {counties, countries, states} from './utils';
 
 class App extends Component<{store: Store}> {
   render() {
@@ -26,6 +26,18 @@ class App extends Component<{store: Store}> {
               <Select.Option value={180}>Last 180 days</Select.Option>
               <Select.Option value={365}>Last 365 days</Select.Option>
               <Select.Option value={-1}>All time</Select.Option>
+            </Select>
+            <Select
+              style={{width: 192}}
+              value={store.country}
+              onChange={country => store.selectCountry(country)}
+            >
+              <Select.Option value="All">Worldwide</Select.Option>
+              {countries.map(country => (
+                <Select.Option value={country} key={country}>
+                  {country}
+                </Select.Option>
+              ))}
             </Select>
             <Select
               style={{width: 192}}

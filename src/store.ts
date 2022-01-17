@@ -31,6 +31,7 @@ export class Store {
     }
   }
 
+  country = 'United States';
   state = 'All';
   county = 'All';
 
@@ -126,15 +127,23 @@ export class Store {
     deathsChart2.update();
   }
 
-  selectState(state: string) {
-    this.state = state;
+  selectRange(range: number) {
+    this.range = range;
+    this.updateChart();
+    this.syncToQueryParams();
+  }
+
+  selectCountry(country: string) {
+    this.country = country;
+    this.state = 'All';
     this.county = 'All';
     this.updateChart();
     this.syncToQueryParams();
   }
 
-  selectRange(range: number) {
-    this.range = range;
+  selectState(state: string) {
+    this.state = state;
+    this.county = 'All';
     this.updateChart();
     this.syncToQueryParams();
   }
@@ -153,6 +162,10 @@ export class Store {
     if (range !== null) {
       this.range = parseInt(range);
     }
+    const country = urlSearchParams.get('country');
+    if (country !== null) {
+      this.country = country;
+    }
     const state = urlSearchParams.get('state');
     if (state !== null) {
       this.state = state;
@@ -167,11 +180,15 @@ export class Store {
   syncToQueryParams() {
     const queryParams = [
       {key: 'range', value: this.range.toString()},
-      {key: 'state', value: this.state},
+      {key: 'country', value: this.country},
     ];
-    if (this.state !== 'All') {
-      queryParams.push({key: 'county', value: this.county});
+    if (this.country !== 'All') {
+      queryParams.push({key: 'state', value: this.state});
+      if (this.state !== 'All') {
+        queryParams.push({key: 'county', value: this.county});
+      }
     }
+
     setQueryParams(queryParams);
   }
 }
