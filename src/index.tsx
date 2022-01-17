@@ -92,7 +92,6 @@ class App extends Component<{store: Store}> {
             <a target="_blank" href="https://github.com/CSSEGISandData">
               CSSE at Johns Hopkins University
             </a>
-            .
           </p>
         </Col>
       </Row>
