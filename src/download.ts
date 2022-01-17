@@ -20,5 +20,5 @@ export default data;`;
 
 download('confirmed_US');
 download('deaths_US');
-download('confirmed_global');
-download('deaths_global');
+// download('confirmed_global');
+// download('deaths_global');

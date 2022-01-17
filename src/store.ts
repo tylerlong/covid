@@ -35,56 +35,52 @@ export class Store {
   county = 'All';
 
   initChart() {
-    const config: ChartConfiguration = {
-      type: 'line',
-      data: {
-        labels: [],
-        datasets: [],
-      },
-    };
-
-    const confimredConfig: ChartConfiguration = {
-      ...config,
-      data: {
-        ...config.data,
-        datasets: [
-          {
-            data: [],
-            backgroundColor: 'rgb(255, 99, 132, 0.5)',
-            borderColor: 'rgb(255, 99, 132, 0.5)',
-          },
-        ],
-      },
+    const confirmedDataset = {
+      data: [],
+      backgroundColor: 'rgb(255, 99, 132, 0.5)',
+      borderColor: 'rgb(255, 99, 132, 0.5)',
     };
     confirmedChart = new Chart(
       document.getElementById('confirmed-chart') as ChartItem,
-      {...confimredConfig, type: 'bar'}
+      {
+        type: 'bar',
+        data: {
+          datasets: [{...confirmedDataset}],
+        },
+      }
     );
     confirmedChart2 = new Chart(
       document.getElementById('confirmed-chart-2') as ChartItem,
-      JSON.parse(JSON.stringify(confimredConfig))
+      {
+        type: 'line',
+        data: {
+          datasets: [{...confirmedDataset}],
+        },
+      }
     );
 
-    const deathsConfig: ChartConfiguration = {
-      ...config,
-      data: {
-        ...config.data,
-        datasets: [
-          {
-            data: [],
-            backgroundColor: 'rgb(0, 0, 0, 0.2)',
-            borderColor: 'rgb(0, 0, 0, 0.2)',
-          },
-        ],
-      },
+    const deathsDataset = {
+      data: [],
+      backgroundColor: 'rgb(0, 0, 0, 0.2)',
+      borderColor: 'rgb(0, 0, 0, 0.2)',
     };
     deathsChart = new Chart(
       document.getElementById('deaths-chart') as ChartItem,
-      {...deathsConfig, type: 'bar'}
+      {
+        type: 'bar',
+        data: {
+          datasets: [{...deathsDataset}],
+        },
+      }
     );
     deathsChart2 = new Chart(
       document.getElementById('deaths-chart-2') as ChartItem,
-      JSON.parse(JSON.stringify(deathsConfig))
+      {
+        type: 'line',
+        data: {
+          datasets: [{...deathsDataset}],
+        },
+      }
     );
     this.updateChart();
   }
