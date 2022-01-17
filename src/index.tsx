@@ -32,7 +32,7 @@ class App extends Component<{store: Store}> {
               value={store.state}
               onChange={state => store.selectState(state)}
             >
-              <Select.Option value="All">All</Select.Option>
+              <Select.Option value="All">All states</Select.Option>
               {states.map(state => (
                 <Select.Option value={state} key={state}>
                   {state}
@@ -45,7 +45,7 @@ class App extends Component<{store: Store}> {
                 value={store.county}
                 onChange={county => store.selectCounty(county)}
               >
-                <Select.Option value="All">All</Select.Option>
+                <Select.Option value="All">All counties</Select.Option>
                 {counties[store.state].map(county => (
                   <Select.Option value={county} key={county}>
                     {county}
@@ -55,12 +55,18 @@ class App extends Component<{store: Store}> {
             ) : null}
           </Space>
           <Divider />
-          <Row gutter={{xxl: 32}}>
+          <Row gutter={[64, 64]}>
             <Col xs={24} xxl={12}>
-              <canvas id="confirmedChart"></canvas>
+              <canvas id="confirmed-chart"></canvas>
             </Col>
             <Col xs={24} xxl={12}>
-              <canvas id="deathsChart"></canvas>
+              <canvas id="confirmed-chart-2"></canvas>
+            </Col>
+            <Col xs={24} xxl={12}>
+              <canvas id="deaths-chart"></canvas>
+            </Col>
+            <Col xs={24} xxl={12}>
+              <canvas id="deaths-chart-2"></canvas>
             </Col>
           </Row>
         </Col>

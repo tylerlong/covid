@@ -33,7 +33,7 @@ export const getData = (options: {
   startDate: string;
   state: string;
   county: string;
-}): number[] => {
+}): [number[], number[]] => {
   const {type, startDate, state, county} = options;
   let filteredData: (string | number | null)[][] = [];
   let startIndex = 0;
@@ -50,7 +50,7 @@ export const getData = (options: {
       break;
     }
     default: {
-      return [];
+      return [[], []];
     }
   }
   if (state !== 'All') {
@@ -59,10 +59,20 @@ export const getData = (options: {
       filteredData = filteredData.filter(row => row[5] === county);
     }
   }
-  return _.map(
+  const result = _.map(
     _.unzip(filteredData.map(item => item.slice(startIndex))),
     _.sum
   );
+  const result2 = [...result];
+  if (startDate === minDate) {
+    result.unshift(0);
+  } else {
+    result.unshift(_.sum(filteredData.map(item => item[startIndex - 1])));
+  }
+  for (let i = result.length - 1; i > 0; i--) {
+    result[i] = result[i] - result[i - 1];
+  }
+  return [result.slice(1).map(item => (item < 0 ? 0 : item)), result2];
 };
 
 export const setQueryParams = (qps: {key: string; value: string}[]) => {
