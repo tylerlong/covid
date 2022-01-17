@@ -112,11 +112,3 @@ export const getData = (options: {
   }
   return [result.slice(1).map(item => (item < 0 ? 0 : item)), result2];
 };
-
-export const setQueryParams = (qps: {key: string; value: string}[]) => {
-  const queryParams = new URLSearchParams();
-  for (const qp of qps) {
-    queryParams.set(qp.key, qp.value);
-  }
-  history.pushState(null, '', '?' + queryParams.toString());
-};

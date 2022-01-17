@@ -1,17 +1,9 @@
 import {useProxy} from '@tylerlong/use-proxy';
 import Chart, {ChartItem} from 'chart.js/auto';
 import moment from 'moment';
+import QueryParams from './QueryParams';
 
-import {
-  getData,
-  minDate,
-  maxDate,
-  getLabels,
-  dateFormat,
-  setQueryParams,
-  states,
-  counties,
-} from './utils';
+import {getData, minDate, maxDate, getLabels, dateFormat} from './utils';
 
 let confirmedChart: Chart;
 let confirmedChart2: Chart;
@@ -134,7 +126,7 @@ export class Store {
   selectRange(range: number) {
     this.range = range;
     this.updateChart();
-    this.syncToQueryParams();
+    this.saveQueries();
   }
 
   selectCountry(country: string) {
@@ -142,64 +134,45 @@ export class Store {
     this.state = 'Countrywide';
     this.county = 'Statewide';
     this.updateChart();
-    this.syncToQueryParams();
+    this.saveQueries();
   }
 
   selectState(state: string) {
     this.state = state;
     this.county = 'Statewide';
     this.updateChart();
-    this.syncToQueryParams();
+    this.saveQueries();
   }
 
   selectCounty(county: string) {
     this.county = county;
     this.updateChart();
-    this.syncToQueryParams();
+    this.saveQueries();
   }
 
-  applyQueryParams() {
-    const urlSearchParams = new URLSearchParams(
-      new URL(window.location.href).search
-    );
-    const range = urlSearchParams.get('range');
-    if (range !== null) {
-      this.range = parseInt(range);
-    }
-    const country = urlSearchParams.get('country');
-    if (country !== null) {
-      this.country = country;
-    }
-    const state = urlSearchParams.get('state');
-    if (state !== null) {
-      this.state = state;
-    }
-    const county = urlSearchParams.get('county');
-    if (county !== null) {
-      this.county = county;
-    }
+  async loadQueries() {
+    const queryParams = await QueryParams.load();
+    this.range = queryParams.range;
+    this.country = queryParams.country;
+    this.state = queryParams.state;
+    this.county = queryParams.county;
     this.updateChart();
   }
 
-  syncToQueryParams() {
-    const queryParams = [
-      {key: 'range', value: this.range.toString()},
-      {key: 'country', value: this.country},
-    ];
-    if ((states[this.country] ?? []).length > 0) {
-      queryParams.push({key: 'state', value: this.state});
-    }
-    if ((counties[this.state] ?? []).length > 0) {
-      queryParams.push({key: 'county', value: this.county});
-    }
-    setQueryParams(queryParams);
+  async saveQueries() {
+    const queryParams = new QueryParams();
+    queryParams.range = this.range;
+    queryParams.country = this.country;
+    queryParams.state = this.state;
+    queryParams.county = this.county;
+    await queryParams.save();
   }
 }
 
 const store = useProxy(new Store());
 // go back/forward in browser
 window.addEventListener('popstate', () => {
-  store.applyQueryParams();
+  store.loadQueries();
 });
 
 export default store;

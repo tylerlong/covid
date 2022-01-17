@@ -98,10 +98,10 @@ class App extends Component<{store: Store}> {
       </Row>
     );
   }
-  componentDidMount() {
+  async componentDidMount() {
     store.initChart();
-    store.applyQueryParams();
-    store.syncToQueryParams();
+    await store.loadQueries();
+    await store.saveQueries();
   }
 }
 
