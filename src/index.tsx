@@ -59,7 +59,7 @@ class App extends Component<{store: Store}> {
                 value={store.county}
                 onChange={county => store.selectCounty(county)}
               >
-                <Select.Option value="All">All counties</Select.Option>
+                <Select.Option value="All">Statewide</Select.Option>
                 {counties[store.state].map(county => (
                   <Select.Option value={county} key={county}>
                     {county}

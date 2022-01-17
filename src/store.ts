@@ -1,5 +1,5 @@
 import {useProxy} from '@tylerlong/use-proxy';
-import Chart, {ChartConfiguration, ChartItem} from 'chart.js/auto';
+import Chart, {ChartItem} from 'chart.js/auto';
 import moment from 'moment';
 
 import {
@@ -9,6 +9,8 @@ import {
   getLabels,
   dateFormat,
   setQueryParams,
+  states,
+  counties,
 } from './utils';
 
 let confirmedChart: Chart;
@@ -94,7 +96,7 @@ export class Store {
         getLabels({
           startDate: this.startDate,
         });
-    let location = 'United States';
+    let location = this.country;
     if (this.state !== 'All') {
       location = `${this.state}, ${location}`;
     }
@@ -182,19 +184,18 @@ export class Store {
       {key: 'range', value: this.range.toString()},
       {key: 'country', value: this.country},
     ];
-    if (this.country !== 'All') {
+    if ((states[this.country] ?? []).length > 0) {
       queryParams.push({key: 'state', value: this.state});
-      if (this.state !== 'All') {
-        queryParams.push({key: 'county', value: this.county});
-      }
     }
-
+    if ((counties[this.state] ?? []).length > 0) {
+      queryParams.push({key: 'county', value: this.county});
+    }
     setQueryParams(queryParams);
   }
 }
 
 const store = useProxy(new Store());
-window.addEventListener('popstate', event => {
+window.addEventListener('popstate', () => {
   // go back/forward in browser
   store.applyQueryParams();
 });

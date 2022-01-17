@@ -100,7 +100,7 @@ export const getData = (options: {
 };
 
 export const setQueryParams = (qps: {key: string; value: string}[]) => {
-  const queryParams = new URLSearchParams(window.location.search);
+  const queryParams = new URLSearchParams();
   for (const qp of qps) {
     queryParams.set(qp.key, qp.value);
   }
