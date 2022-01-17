@@ -88,7 +88,7 @@ class App extends Component<{store: Store}> {
           </Row>
           <Divider />
           <p>
-            Data is provided by{' '}
+            Data provided by{' '}
             <a target="_blank" href="https://github.com/CSSEGISandData">
               CSSE at Johns Hopkins University
             </a>
