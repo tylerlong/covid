@@ -33,9 +33,9 @@ export class Store {
     }
   }
 
-  country = 'United States';
-  state = 'All';
-  county = 'All';
+  country = 'Worldwide';
+  state = 'Countrywide';
+  county = 'Statewide';
 
   initChart() {
     const confirmedDataset = {
@@ -96,11 +96,11 @@ export class Store {
         getLabels({
           startDate: this.startDate,
         });
-    let location = this.country === 'All' ? 'the world' : this.country;
-    if (this.state !== 'All') {
+    let location = this.country === 'Worldwide' ? 'the world' : this.country;
+    if (this.state !== 'Countrywide') {
       location = `${this.state}, ${location}`;
     }
-    if (this.county !== 'All') {
+    if (this.county !== 'Statewide') {
       location = `${this.county}, ${location}`;
     }
     [
@@ -139,15 +139,15 @@ export class Store {
 
   selectCountry(country: string) {
     this.country = country;
-    this.state = 'All';
-    this.county = 'All';
+    this.state = 'Countrywide';
+    this.county = 'Statewide';
     this.updateChart();
     this.syncToQueryParams();
   }
 
   selectState(state: string) {
     this.state = state;
-    this.county = 'All';
+    this.county = 'Statewide';
     this.updateChart();
     this.syncToQueryParams();
   }

@@ -1,3 +1,4 @@
 --ignore-dir=docs
+--ignore-dir=src/data
 --ignore-dir=node_modules
 --ignore-file=match:/^yarn\.lock$/

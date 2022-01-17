@@ -86,14 +86,14 @@ export const getData = (options: {
       return [[], []];
     }
   }
-  if (country !== 'United States' && country !== 'All') {
+  if (country !== 'United States' && country !== 'Worldwide') {
     filteredData = filteredData.filter(row => row[1] === country);
   }
-  if (state !== 'All') {
+  if (state !== 'Countrywide') {
     filteredData = filteredData.filter(row =>
       country === 'United States' ? row[6] === state : row[0] === state
     );
-    if (county !== 'All') {
+    if (county !== 'Statewide') {
       filteredData = filteredData.filter(row => row[5] === county);
     }
   }

@@ -33,7 +33,7 @@ class App extends Component<{store: Store}> {
               onChange={country => store.selectCountry(country)}
               showSearch
             >
-              <Select.Option value="All">Worldwide</Select.Option>
+              <Select.Option value="Worldwide">Worldwide</Select.Option>
               {countries.map(country => (
                 <Select.Option value={country} key={country}>
                   {country}
@@ -47,7 +47,7 @@ class App extends Component<{store: Store}> {
                 onChange={state => store.selectState(state)}
                 showSearch
               >
-                <Select.Option value="All">Countrywide</Select.Option>
+                <Select.Option value="Countrywide">Countrywide</Select.Option>
                 {states[store.country].map(state => (
                   <Select.Option value={state} key={state}>
                     {state}
@@ -62,7 +62,7 @@ class App extends Component<{store: Store}> {
                 onChange={county => store.selectCounty(county)}
                 showSearch
               >
-                <Select.Option value="All">Statewide</Select.Option>
+                <Select.Option value="Statewide">Statewide</Select.Option>
                 {counties[store.state].map(county => (
                   <Select.Option value={county} key={county}>
                     {county}
