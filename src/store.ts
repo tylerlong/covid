@@ -96,7 +96,7 @@ export class Store {
         getLabels({
           startDate: this.startDate,
         });
-    let location = this.country;
+    let location = this.country === 'All' ? 'the world' : this.country;
     if (this.state !== 'All') {
       location = `${this.state}, ${location}`;
     }

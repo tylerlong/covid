@@ -3,11 +3,8 @@ import _ from 'lodash';
 
 import confirmed from './data/confirmed_US';
 import deaths from './data/deaths_US';
-import _confirmedGlobal from './data/confirmed_global';
-import _deathsGlobal from './data/deaths_global';
-
-const confirmedGlobal = _confirmedGlobal.filter(item => item[1] !== 'US');
-const deathsGlobal = _deathsGlobal.filter(item => item[1] !== 'US');
+import confirmedGlobal from './data/confirmed_global';
+import deathsGlobal from './data/deaths_global';
 
 const header = confirmed[0];
 export const minDate = header[11] as string;
@@ -16,8 +13,7 @@ export const dateFormat = 'M/D/YY';
 
 export const countries = [
   ...new Set(confirmedGlobal.slice(1).map(row => row[1])),
-  'United States',
-].sort();
+].map(country => (country === 'US' ? 'United States' : country));
 const usStates = [
   ...new Set(confirmed.slice(1).map(row => row[6])),
 ] as string[];
@@ -90,7 +86,7 @@ export const getData = (options: {
       return [[], []];
     }
   }
-  if (country !== 'United States') {
+  if (country !== 'United States' && country !== 'All') {
     filteredData = filteredData.filter(row => row[1] === country);
   }
   if (state !== 'All') {
