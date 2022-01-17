@@ -1,3 +1,7 @@
 body {
   padding: 1rem;
 }
+
+div.form > .ant-select {
+  margin: 4px 8px 4px 0;
+}

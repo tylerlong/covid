@@ -14,7 +14,7 @@ class App extends Component<{store: Store}> {
       <Row>
         <Col offset={1} span={22}>
           <h1>COVID-19 Tracker &amp; Charts</h1>
-          <Space>
+          <div className="form">
             <Select
               style={{width: 192}}
               value={store.range}
@@ -70,7 +70,7 @@ class App extends Component<{store: Store}> {
                 ))}
               </Select>
             ) : null}
-          </Space>
+          </div>
           <Divider />
           <Row gutter={[64, 64]}>
             <Col xs={24} xxl={12}>
