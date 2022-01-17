@@ -13,7 +13,7 @@ class App extends Component<{store: Store}> {
     return (
       <Row>
         <Col offset={1} span={22}>
-          <h1>COVID-19</h1>
+          <h1>COVID-19 Tracker &amp; Charts</h1>
           <Space>
             <Select
               style={{width: 192}}

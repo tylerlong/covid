@@ -53,32 +53,50 @@ export const getLabels = (options: {startDate: string}): string[] => {
 };
 
 export const getData = (options: {
-  type: 'confirmed_US' | 'deaths_US';
+  type: 'confirmed' | 'deaths';
   startDate: string;
+  country: string;
   state: string;
   county: string;
 }): [number[], number[]] => {
-  const {type, startDate, state, county} = options;
+  const {type, startDate, country, state, county} = options;
   let filteredData: (string | number | null)[][] = [];
   let startIndex = 0;
   switch (type) {
-    case 'confirmed_US': {
-      startIndex = header.indexOf(startDate);
-      filteredData = confirmed.slice(1);
+    case 'confirmed': {
+      if (country === 'United States') {
+        startIndex = header.indexOf(startDate);
+        filteredData = confirmed.slice(1);
+      } else {
+        const header = confirmedGlobal[0];
+        startIndex = header.indexOf(startDate);
+        filteredData = confirmedGlobal.slice(1);
+      }
       break;
     }
-    case 'deaths_US': {
-      const header = deaths[0];
-      startIndex = header.indexOf(startDate);
-      filteredData = deaths.slice(1);
+    case 'deaths': {
+      if (country === 'United States') {
+        const header = deaths[0];
+        startIndex = header.indexOf(startDate);
+        filteredData = deaths.slice(1);
+      } else {
+        const header = deathsGlobal[0];
+        startIndex = header.indexOf(startDate);
+        filteredData = deathsGlobal.slice(1);
+      }
       break;
     }
     default: {
       return [[], []];
     }
   }
+  if (country !== 'United States') {
+    filteredData = filteredData.filter(row => row[1] === country);
+  }
   if (state !== 'All') {
-    filteredData = filteredData.filter(row => row[6] === state);
+    filteredData = filteredData.filter(
+      row => row[6] === state || row[0] === state
+    );
     if (county !== 'All') {
       filteredData = filteredData.filter(row => row[5] === county);
     }

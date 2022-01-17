@@ -107,8 +107,9 @@ export class Store {
       confirmedChart.data.datasets[0].data,
       confirmedChart2.data.datasets[0].data,
     ] = getData({
-      type: 'confirmed_US',
+      type: 'confirmed',
       startDate: this.startDate,
+      country: this.country,
       state: this.state,
       county: this.county,
     });
@@ -118,8 +119,9 @@ export class Store {
     confirmedChart2.update();
     [deathsChart.data.datasets[0].data, deathsChart2.data.datasets[0].data] =
       getData({
-        type: 'deaths_US',
+        type: 'deaths',
         startDate: this.startDate,
+        country: this.country,
         state: this.state,
         county: this.county,
       });
@@ -195,8 +197,8 @@ export class Store {
 }
 
 const store = useProxy(new Store());
+// go back/forward in browser
 window.addEventListener('popstate', () => {
-  // go back/forward in browser
   store.applyQueryParams();
 });
 

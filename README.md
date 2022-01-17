@@ -5,4 +5,5 @@ A website to allow people to browse COVID-19 data visually and easily.
 
 ## Todo
 
-- Provide world wide data and filter by country
+- Release an app
+  - provide a link to download the app
