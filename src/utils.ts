@@ -18,7 +18,22 @@ export const countries = [
   ...new Set(confirmedGlobal.slice(1).map(row => row[1])),
   'United States',
 ].sort();
-export const states = [...new Set(confirmed.slice(1).map(row => row[6]))];
+const usStates = [
+  ...new Set(confirmed.slice(1).map(row => row[6])),
+] as string[];
+export const states: {[country: string]: string[]} = {
+  'United States': usStates,
+};
+for (const row of confirmedGlobal.slice(1)) {
+  const country = row[1] as string;
+  const state = row[0] as string;
+  if (!states[country]) {
+    states[country] = [];
+  }
+  if (state !== null) {
+    states[country].push(state);
+  }
+}
 export const counties: {[state: string]: string[]} = {};
 for (const row of confirmed.slice(1)) {
   const state = row[6] as string;
