@@ -1,7 +1,7 @@
-# COVID-19 Tracker & Charts
+# COVID Tracker & Charts
 
-A website to browse COVID-19 data visually.
+A website to browse COVID data visually.
 
-- [Website](https://chuntaoliu.com/covid-19/)
-- [App](https://github.com/tylerlong/covid-19-app/releases)
+- [Website](https://chuntaoliu.com/covid/)
+- [App](https://github.com/tylerlong/covid-app/releases)
   - Available for macOS and Windows only

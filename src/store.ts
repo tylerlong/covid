@@ -105,8 +105,8 @@ export class Store {
       state: this.state,
       county: this.county,
     });
-    confirmedChart.data.datasets[0].label = `COVID-19 new cases in ${location}`;
-    confirmedChart2.data.datasets[0].label = `COVID-19 total cases in ${location}`;
+    confirmedChart.data.datasets[0].label = `COVID new cases in ${location}`;
+    confirmedChart2.data.datasets[0].label = `COVID total cases in ${location}`;
     confirmedChart.update();
     confirmedChart2.update();
     [deathsChart.data.datasets[0].data, deathsChart2.data.datasets[0].data] =
@@ -117,8 +117,8 @@ export class Store {
         state: this.state,
         county: this.county,
       });
-    deathsChart.data.datasets[0].label = `COVID-19 new deaths in ${location}`;
-    deathsChart2.data.datasets[0].label = `COVID-19 total deaths in ${location}`;
+    deathsChart.data.datasets[0].label = `COVID new deaths in ${location}`;
+    deathsChart2.data.datasets[0].label = `COVID total deaths in ${location}`;
     deathsChart.update();
     deathsChart2.update();
   }

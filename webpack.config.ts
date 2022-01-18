@@ -49,7 +49,7 @@ const config: Configuration = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'COVID-19 Tracker & Charts',
+      title: 'COVID Tracker & Charts',
     }),
   ],
   resolve: {

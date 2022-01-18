@@ -13,7 +13,7 @@ class App extends Component<{store: Store}> {
     return (
       <Row>
         <Col offset={1} span={22}>
-          <h1>COVID-19 Tracker &amp; Charts</h1>
+          <h1>COVID Tracker &amp; Charts</h1>
           <div className="links"></div>
           <div className="form">
             <Select
@@ -95,7 +95,7 @@ class App extends Component<{store: Store}> {
             </a>{' '}
             |{' '}
             <a
-              href="https://github.com/tylerlong/covid-19-app/releases"
+              href="https://github.com/tylerlong/covid-app/releases"
               target="_blank"
             >
               Download App
