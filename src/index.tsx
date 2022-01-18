@@ -14,7 +14,7 @@ class App extends Component<{store: Store}> {
       <Row>
         <Col offset={1} span={22}>
           <h1>COVID Tracker &amp; Charts</h1>
-          <div className="links"></div>
+          <div className="app-only"></div>
           <div className="form">
             <Select
               style={{width: 192}}
@@ -92,14 +92,17 @@ class App extends Component<{store: Store}> {
             Data provided by{' '}
             <a target="_blank" href="https://github.com/CSSEGISandData">
               CSSE at Johns Hopkins University
-            </a>{' '}
-            |{' '}
-            <a
-              href="https://github.com/tylerlong/covid-app/releases"
-              target="_blank"
-            >
-              Download App
             </a>
+            <span className="website-only">
+              {' '}
+              |{' '}
+              <a
+                href="https://github.com/tylerlong/covid-app/releases"
+                target="_blank"
+              >
+                Download App
+              </a>
+            </span>
           </p>
         </Col>
       </Row>
