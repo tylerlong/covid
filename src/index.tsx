@@ -26,7 +26,7 @@ class App extends Component<{store: Store}> {
               <Select.Option value={90}>Last 90 days</Select.Option>
               <Select.Option value={180}>Last 180 days</Select.Option>
               <Select.Option value={365}>Last 365 days</Select.Option>
-              <Select.Option value={-1}>All time</Select.Option>
+              <Select.Option value={-1}>Since 2022-01-01</Select.Option>
             </Select>
             <Select
               style={{width: 192}}
