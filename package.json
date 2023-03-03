@@ -2,7 +2,7 @@
   "license": "MIT",
   "scripts": {
     "serve": "parcel src/index.html",
-    "release": "parcel build src/index.html --dist-dir docs",
+    "release": "parcel build src/index.html --dist-dir docs --public-url .",
     "download": "ts-node src/download.ts"
   },
   "dependencies": {
