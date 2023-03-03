@@ -1,7 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import {createRoot} from 'react-dom/client';
 import {Component} from '@tylerlong/use-proxy/build/react';
-import {Col, Divider, Row, Select, Space} from 'antd';
+import {Col, Divider, Row, Select} from 'antd';
 
 import './index.css';
 import store, {Store} from './store';
@@ -117,4 +117,5 @@ class App extends Component<{store: Store}> {
 
 const container = document.createElement('div');
 document.body.appendChild(container);
-ReactDOM.render(<App store={store} />, container);
+const root = createRoot(container);
+root.render(<App store={store} />);
