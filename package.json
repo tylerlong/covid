@@ -2,7 +2,7 @@
   "license": "MIT",
   "scripts": {
     "serve": "parcel src/index.html",
-    "release": "parcel build src/index.html --dist-dir docs --public-url .",
+    "release": "node --max-old-space-size=8192 ./node_modules/parcel/lib/bin.js build src/index.html --dist-dir docs --public-url .",
     "download": "ts-node src/download.ts"
   },
   "dependencies": {
